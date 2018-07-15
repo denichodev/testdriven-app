@@ -19,9 +19,10 @@ elif [ "$1" = "rebuild" ]
 then
     echo "Rebuilding docker development server..."
     docker-compose -f docker-compose-dev.yml up --build
-elif [ "$1" = "test:api" ]
+elif [ "$1" = "test:users" ]
 then
     echo "Running test..."
+    docker-compose -f docker-compose-dev.yml run users python manage.py test
 elif [ "$1" = "db:create" ]
 then
     echo "Creating database"
