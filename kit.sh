@@ -3,7 +3,11 @@
 if [ "$1" = "up" ]
 then
     echo "Starting docker development server..."
-    docker-compose -f docker-compose-dev.yml up
+    docker-compose -f docker-compose-dev.yml up -d
+elif [ "$1" = "build" ]
+then
+    echo "Building docker development server..."
+    docker-compose -f docker-compose-dev.yml build
 elif [ "$1" = "deploy" ]
 then
     echo "Switching env to production..."
