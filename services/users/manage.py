@@ -17,6 +17,14 @@ def recreate_db():
 
 
 @cli.command()
+def seed_db():
+    """Seeds the database"""
+    db.session.add(User(username="denicho", email="dencho@fake.com"))
+    db.session.add(User(username="ruth", email="ruthhtgl@fake.com"))
+    db.session.commit()
+
+
+@cli.command()
 def test():
     """ Runs the test without the code coverage."""
     tests = unittest.TestLoader().discover('project/tests', pattern='test*.py')

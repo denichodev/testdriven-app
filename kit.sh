@@ -4,32 +4,14 @@ if [ "$1" = "up" ]
 then
     echo "Starting docker development server..."
     docker-compose -f docker-compose-dev.yml up
-elif [ "$1" = "down" ]
+elif [ "$1" = "deploy" ]
 then
-    echo "Stoping docker development server..."
-    docker-compose -f docker-compose-dev.yml down
-elif [ "$1" = "ps" ]
-then
-    docker-compose -f docker-compose-dev.yml ps
-elif [ "$1" = "build" ]
-then
-    echo "Building docker image..."
-    docker-compose -f docker-compose-dev.yml build
-elif [ "$1" = "rebuild" ]
-then
-    echo "Rebuilding docker development server..."
-    docker-compose -f docker-compose-dev.yml up --build
-elif [ "$1" = "test:users" ]
-then
-    echo "Running test..."
-    docker-compose -f docker-compose-dev.yml run users python manage.py test
-elif [ "$1" = "db:create" ]
-then
-    echo "Creating database"
-    docker-compose -f docker-compose-dev.yml run users python manage.py recreate_db
-elif [ "$1" = "db:seed" ]
-then
-    echo "Seeding database"
+    echo "Switching env to production..."
+    eval $(docker-machine env testdriven-prod)
+    echo "Building & deploying..."
+    docker-compose -f docker-compose-prod.yml up -d --build
+    echo "Success... switching to unset env"
+    eval $(docker-machine env -u)
 else
     echo "Nothing to do..."
 fi
